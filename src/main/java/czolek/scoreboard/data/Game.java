@@ -23,7 +23,7 @@ public record Game(Team home, Team away, Score score, Instant startTimestamp) {
         return new GameId(home.name(), away.name());
     }
 
-    public Game updateScore(Score score) {
+    public Game withScore(Score score) {
         return new Game(home(), away(), score, startTimestamp());
     }
 
@@ -41,12 +41,12 @@ public record Game(Team home, Team away, Score score, Instant startTimestamp) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
-        return home.equals(game.home) && away.equals(game.away);
+        return this.id().equals(game.id());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(home, away);
+        return Objects.hash(id());
     }
 
     public static GameBuilder builder() {

@@ -1,6 +1,4 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.4'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
 
@@ -13,8 +11,8 @@ repositories {
 }
 
 dependencies {
-	testImplementation 'org.junit.jupiter:junit-jupiter'
-	testImplementation 'org.assertj:assertj-core'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+	testImplementation 'org.assertj:assertj-core:3.22.0'
 }
 
 tasks.named('test') {

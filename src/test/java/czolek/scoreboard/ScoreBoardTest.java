@@ -4,7 +4,9 @@ import czolek.scoreboard.data.Game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static czolek.scoreboard.data.Score.of;
+import static czolek.scoreboard.data.GameId.id;
+import static czolek.scoreboard.data.Score.score;
+import static czolek.scoreboard.data.Team.team;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -17,7 +19,7 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard();
 
         // when
-        var game = scoreBoard.startGame("Mexico", "Canada");
+        var game = scoreBoard.startGame(team("Mexico"), team("Canada"));
 
         //then
         var summary = scoreBoard.getSummary();
@@ -33,14 +35,14 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
-        scoreBoard.startGame("Spain", "Brazil");
+        scoreBoard.startGame(team("Spain"), team("Brazil"));
 
         // then
         var summary = scoreBoard.getSummary();
         assertThat(summary).hasSize(2);
         assertThat(summary).containsExactly(
                 MEXICO_CANADA,
-                Game.builder().home("Spain").away("Brazil").score(0,0).build()
+                Game.builder().home("Spain").away("Brazil").score(0, 0).build()
         );
     }
 
@@ -52,7 +54,7 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
-        scoreBoard.finishGame("Mexico", "Canada");
+        scoreBoard.finishGame(id("Mexico", "Canada"));
 
         //then
         var summary = scoreBoard.getSummary();
@@ -66,7 +68,7 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard();
 
         // when
-        scoreBoard.finishGame("Mexico", "Canada");
+        scoreBoard.finishGame(id("Mexico", "Canada"));
 
         // then
         var summary = scoreBoard.getSummary();
@@ -81,7 +83,7 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
-        scoreBoard.finishGame("Spain", "Brazil");
+        scoreBoard.finishGame(id("Spain", "Brazil"));
 
         // then
         var summary = scoreBoard.getSummary();
@@ -97,8 +99,8 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
-        var score = of(1, 3);
-        scoreBoard.updateScore("Mexico", "Canada", score);
+        var score = score(1, 3);
+        scoreBoard.updateScore(id("Mexico", "Canada"), score);
 
         // then
         var summary = scoreBoard.getSummary();
@@ -113,7 +115,7 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard();
 
         // when
-        Throwable throwable = catchThrowable(() -> scoreBoard.updateScore("Spain", "Brazil", of(1, 3)));
+        Throwable throwable = catchThrowable(() -> scoreBoard.updateScore(id("Spain", "Brazil"), score(1, 3)));
 
         // then
         assertThat(throwable)

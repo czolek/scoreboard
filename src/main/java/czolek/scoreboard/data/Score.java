@@ -5,7 +5,7 @@ public record Score(int home, int away) {
         this(0, 0);
     }
 
-    public static Score of(int home, int away) {
+    public static Score score(int home, int away) {
         return new Score(home, away);
     }
 }

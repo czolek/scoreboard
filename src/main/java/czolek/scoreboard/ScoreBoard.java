@@ -1,16 +1,18 @@
 package czolek.scoreboard;
 
 import czolek.scoreboard.data.Game;
+import czolek.scoreboard.data.GameId;
 import czolek.scoreboard.data.Score;
+import czolek.scoreboard.data.Team;
 
 import java.util.List;
 
 public interface ScoreBoard {
-    Game startGame(String homeTeamName, String awayTeamName);
+    Game startGame(Team home, Team away);
 
-    Game finishGame(String homeTeamName, String awayTeamName);
+    Game finishGame(GameId gameId);
 
-    Game updateScore(String homeTeamName, String awayTeamName, Score score);
+    Game updateScore(GameId gameId, Score score);
 
     List<Game> getSummary();
 }

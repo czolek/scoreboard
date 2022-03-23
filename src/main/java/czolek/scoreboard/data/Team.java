@@ -7,7 +7,7 @@ public record Team(String name) {
         Objects.requireNonNull(name, "Name cannot be null");
     }
 
-    public static Team of(String name) {
+    public static Team team(String name) {
         return new Team(name);
     }
 }
