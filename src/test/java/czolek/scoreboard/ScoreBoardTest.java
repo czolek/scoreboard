@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ScoreBoardTest {
 
@@ -84,5 +85,37 @@ class ScoreBoardTest {
         var summary = scoreBoard.getSummary();
         assertThat(summary).hasSize(1);
         assertThat(summary).containsExactly(MEXICO_CANADA);
+    }
+
+    @Test
+    @DisplayName("Given ScoreBoard with existing game, 'updateScore' should update the score")
+    void shouldUpdateTheScore() {
+        // given
+        var MEXICO_CANADA = new Game(new Team("Mexico", 1), new Team("Canada", 0));
+        ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
+
+        // when
+        var score = new Score(1, 3);
+        scoreBoard.updateScore("Mexico", "Canada", score);
+
+        // then
+        var summary = scoreBoard.getSummary();
+        assertThat(summary).hasSize(1);
+        assertThat(summary).containsExactly(new Game(new Team("Mexico", 1), new Team("Canada", 3)));
+    }
+
+    @Test
+    @DisplayName("Should throw an exception when updating score of non-existent game")
+    void shouldThrowExceptionWhenUpdatingScoreOfNonExistentGame() {
+        // given
+        ScoreBoard scoreBoard = new InMemoryScoreBoard();
+
+        // when
+        Throwable throwable = catchThrowable(() -> scoreBoard.updateScore("Spain", "Brazil", new Score(1, 3)));
+
+        // then
+        assertThat(throwable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Cannot find game 'Spain - Brazil'");
     }
 }

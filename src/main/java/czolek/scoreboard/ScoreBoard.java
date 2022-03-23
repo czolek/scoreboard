@@ -7,5 +7,7 @@ public interface ScoreBoard {
 
     Game finishGame(String homeTeamName, String awayTeamName);
 
+    Game updateScore(String homeTeamName, String awayTeamName, Score score);
+
     List<Game> getSummary();
 }
