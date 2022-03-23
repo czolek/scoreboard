@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static java.util.Optional.ofNullable;
+
 public class InMemoryScoreBoard implements ScoreBoard {
     private final ConcurrentMap<GameId, Game> matches = new ConcurrentHashMap<>();
 
@@ -34,7 +36,12 @@ public class InMemoryScoreBoard implements ScoreBoard {
 
     @Override
     public Game updateScore(String homeTeamName, String awayTeamName, Score score) {
-        return null;
+        var id = new GameId(homeTeamName, awayTeamName);
+        var existingGame = ofNullable(matches.get(id))
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Cannot find game '%s - %s'", homeTeamName, awayTeamName)));
+        var updatedGame = existingGame.updateScore(score);
+        matches.put(id, updatedGame);
+        return updatedGame;
     }
 
     @Override

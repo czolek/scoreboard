@@ -18,6 +18,10 @@ public record Game(Team home, Team away, Instant startTimestamp) {
         return new GameId(home.name(), away.name());
     }
 
+    public Game updateScore(Score score) {
+        return new Game(new Team(home().name(), score.home()), new Team(away().name(), score.away()), startTimestamp());
+    }
+
     @Override
     public String toString() {
         return String.format("%s - %s: %d - %d", home().name(), away().name(), home().score(), away().score());
