@@ -27,6 +27,10 @@ public record Game(Team home, Team away, Score score, Instant startTimestamp) {
         return new Game(home(), away(), score, startTimestamp());
     }
 
+    public int totalScore() {
+        return score().home() + score().away();
+    }
+
     @Override
     public String toString() {
         return String.format("%s - %s: %d - %d", home().name(), away().name(), score().home(), score().away());
