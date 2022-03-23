@@ -20,14 +20,14 @@ class ScoreBoardTest {
         //then
         var summary = scoreBoard.getSummary();
         assertThat(summary).hasSize(1);
-        assertThat(summary).containsExactly(new Game(new Team("Mexico", 0), new Team("Canada", 0)));
+        assertThat(summary).containsExactly(new Game(new Team("Mexico"), new Team("Canada"), new Score(0, 0)));
     }
 
     @Test
     @DisplayName("Given ScoreBoard with existing game, 'startGame' should add another game with 0-0 result")
     void shouldAddAGame() {
         // given
-        var MEXICO_CANADA = new Game(new Team("Mexico", 1), new Team("Canada", 0));
+        var MEXICO_CANADA = new Game(new Team("Mexico"), new Team("Canada"), new Score(5, 2));
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
@@ -38,7 +38,7 @@ class ScoreBoardTest {
         assertThat(summary).hasSize(2);
         assertThat(summary).containsExactly(
                 MEXICO_CANADA,
-                new Game(new Team("Spain", 0), new Team("Brazil", 0))
+                new Game(new Team("Spain"), new Team("Brazil"), new Score(0,0))
         );
     }
 
@@ -46,7 +46,7 @@ class ScoreBoardTest {
     @DisplayName("Given ScoreBoard with existing game, 'finishGame' should remove it and leave empty board")
     void shouldRemoveFinishedGameAndLeaveEmptyBoard() {
         // given
-        var MEXICO_CANADA = new Game(new Team("Mexico", 1), new Team("Canada", 0));
+        var MEXICO_CANADA = new Game(new Team("Mexico"), new Team("Canada"), new Score(1, 0));
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
@@ -75,7 +75,7 @@ class ScoreBoardTest {
     @DisplayName("Given ScoreBoard with existing game, 'finishGame' that does not exist should do nothing")
     void shouldDoNothingWhenFinishingNonExisingGame() {
         // given
-        var MEXICO_CANADA = new Game(new Team("Mexico", 1), new Team("Canada", 0));
+        var MEXICO_CANADA = new Game(new Team("Mexico"), new Team("Canada"), new Score(1, 0));
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
@@ -91,7 +91,7 @@ class ScoreBoardTest {
     @DisplayName("Given ScoreBoard with existing game, 'updateScore' should update the score")
     void shouldUpdateTheScore() {
         // given
-        var MEXICO_CANADA = new Game(new Team("Mexico", 1), new Team("Canada", 0));
+        var MEXICO_CANADA = new Game(new Team("Mexico"), new Team("Canada"), new Score(1, 0));
         ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
 
         // when
@@ -101,7 +101,7 @@ class ScoreBoardTest {
         // then
         var summary = scoreBoard.getSummary();
         assertThat(summary).hasSize(1);
-        assertThat(summary).containsExactly(new Game(new Team("Mexico", 1), new Team("Canada", 3)));
+        assertThat(summary).containsExactly(new Game(new Team("Mexico"), new Team("Canada"), new Score(1, 3)));
     }
 
     @Test

@@ -3,6 +3,8 @@ package czolek.scoreboard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -41,10 +43,16 @@ class DataValidationTest {
     @Test
     @DisplayName("Should throw validation exception when creating game with null start timestamp")
     void shouldThrowValidationExceptionWhenCreatingGameWithNullStartTimestamp() {
-        Throwable throwable = catchThrowable(() -> new Game(new Team("home"), new Team("away"), null));
+        Throwable throwable = catchThrowable(() -> new Game(new Team("home"), new Team("away"), new Score(), null));
 
         assertThat(throwable)
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("Game start timestamp cannot be null");
+    }
+
+    @Test
+    @DisplayName("Should throw validation exception when creating game with null score")
+    void ShouldThrowValidationExceptionWhenCreatingGameWithNullScore() {
+        Throwable throwable = catchThrowable(() -> new Game(new Team("home"), new Team("away"), null));
     }
 }
