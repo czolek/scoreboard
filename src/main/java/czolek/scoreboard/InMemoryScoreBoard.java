@@ -27,7 +27,8 @@ public class InMemoryScoreBoard implements ScoreBoard {
 
     @Override
     public Game finishGame(String homeTeamName, String awayTeamName) {
-        return null;
+        var id = new GameId(homeTeamName, awayTeamName);
+        return matches.remove(id);
     }
 
     @Override
