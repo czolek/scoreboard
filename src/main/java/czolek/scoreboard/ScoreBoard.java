@@ -1,5 +1,8 @@
 package czolek.scoreboard;
 
+import czolek.scoreboard.data.Game;
+import czolek.scoreboard.data.Score;
+
 import java.util.List;
 
 public interface ScoreBoard {

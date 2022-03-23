@@ -1,4 +1,4 @@
-package czolek.scoreboard;
+package czolek.scoreboard.data;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -43,5 +43,34 @@ public record Game(Team home, Team away, Score score, Instant startTimestamp) {
     @Override
     public int hashCode() {
         return Objects.hash(home, away);
+    }
+
+    public static GameBuilder builder() {
+        return new GameBuilder();
+    }
+
+    public static class GameBuilder {
+        private String home;
+        private String away;
+        private Score score;
+
+        public GameBuilder home(String homeTeamName) {
+            home = homeTeamName;
+            return this;
+        }
+
+        public GameBuilder away(String awayTeamName) {
+            away = awayTeamName;
+            return this;
+        }
+
+        public GameBuilder score(int home, int away) {
+            score = new Score(home, away);
+            return this;
+        }
+
+        public Game build() {
+            return new Game(new Team(home), new Team(away), score);
+        }
     }
 }

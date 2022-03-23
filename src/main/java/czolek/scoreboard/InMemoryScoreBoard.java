@@ -1,5 +1,10 @@
 package czolek.scoreboard;
 
+import czolek.scoreboard.data.Game;
+import czolek.scoreboard.data.GameId;
+import czolek.scoreboard.data.Score;
+import czolek.scoreboard.data.Team;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
