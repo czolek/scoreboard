@@ -40,4 +40,49 @@ class ScoreBoardTest {
                 new Game(new Team("Spain", 0), new Team("Brazil", 0))
         );
     }
+
+    @Test
+    @DisplayName("Given ScoreBoard with existing game, 'finishGame' should remove it and leave empty board")
+    void shouldRemoveFinishedGameAndLeaveEmptyBoard() {
+        // given
+        var MEXICO_CANADA = new Game(new Team("Mexico", 1), new Team("Canada", 0));
+        ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
+
+        // when
+        scoreBoard.finishGame("Mexico", "Canada");
+
+        //then
+        var summary = scoreBoard.getSummary();
+        assertThat(summary).hasSize(0);
+    }
+
+    @Test
+    @DisplayName("Given empty ScoreBoard, 'finishGame' should do nothing, board remains empty")
+    void shouldLeaveEmptyBoardAfterRemovingNonExistingGame() {
+        // given
+        ScoreBoard scoreBoard = new InMemoryScoreBoard();
+
+        // when
+        scoreBoard.finishGame("Mexico", "Canada");
+
+        // then
+        var summary = scoreBoard.getSummary();
+        assertThat(summary).hasSize(0);
+    }
+
+    @Test
+    @DisplayName("Given ScoreBoard with existing game, 'finishGame' that does not exist should do nothing")
+    void shouldDoNothingWhenFinishingNonExisingGame() {
+        // given
+        var MEXICO_CANADA = new Game(new Team("Mexico", 1), new Team("Canada", 0));
+        ScoreBoard scoreBoard = new InMemoryScoreBoard(MEXICO_CANADA);
+
+        // when
+        scoreBoard.finishGame("Spain", "Brazil");
+
+        // then
+        var summary = scoreBoard.getSummary();
+        assertThat(summary).hasSize(1);
+        assertThat(summary).containsExactly(MEXICO_CANADA);
+    }
 }

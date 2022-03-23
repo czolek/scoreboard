@@ -26,6 +26,11 @@ public class InMemoryScoreBoard implements ScoreBoard {
     }
 
     @Override
+    public Game finishGame(String homeTeamName, String awayTeamName) {
+        return null;
+    }
+
+    @Override
     public List<Game> getSummary() {
         return List.copyOf(matches.values());
     }
