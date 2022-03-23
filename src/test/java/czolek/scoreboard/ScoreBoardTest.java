@@ -14,14 +14,12 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new InMemoryScoreBoard();
 
         // when
-        scoreBoard.startGame("Mexico", "Canada");
+        var game = scoreBoard.startGame("Mexico", "Canada");
 
         //then
         var summary = scoreBoard.getSummary();
         assertThat(summary).hasSize(1);
-        assertThat(summary).containsExactly(
-                new Game(new Team("Mexico", 0), new Team("Canada", 0))
-        );
+        assertThat(summary).containsExactly(new Game(new Team("Mexico", 0), new Team("Canada", 0)));
     }
 
     @Test
