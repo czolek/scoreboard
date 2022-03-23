@@ -2,6 +2,7 @@ package czolek.scoreboard;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -13,7 +14,7 @@ public class InMemoryScoreBoard implements ScoreBoard {
     }
 
     public InMemoryScoreBoard(Game... initialGames) {
-        assert initialGames != null : "Initial initialGames cannot be null";
+        Objects.requireNonNull(initialGames, "Initial games cannot be null");
 
         Arrays.stream(initialGames).forEach(game -> matches.put(game.id(), game));
     }
